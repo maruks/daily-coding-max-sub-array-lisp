@@ -8,11 +8,11 @@
 (defparameter *foo* (make-array 1 :initial-contents '(0)))
 
 (deftest max-array-test ()
-  (is (= 6 (simple-max *array*) (rec-max *array*) (kadene-max *array*))))
+  (is (= 6 (simple-max *array*) (rec-max *array*) (kadene-max *array*) (kadene-max-loop *array*))))
 
 (deftest max-array-gen-test ()
   (let ((*num-trials* 1000))
     (check-it (generator (list (integer) :min-length 1))
               (lambda (xs)
-		(let ((array (make-array (length xs) :initial-contents xs)))
+		(let ((array (coerce xs 'vector)))
 		  (is (= (simple-max array) (rec-max array) (kadene-max-loop array) (kadene-max array))))))))
